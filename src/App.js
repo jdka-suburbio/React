@@ -1,6 +1,8 @@
 import logo from './logo.svg';
-import './App.css';
+import AuthorList from './components/AuthorList';
 
+import './App.css';
+/*
 function App() {
   return (
     <div className="App">
@@ -21,5 +23,12 @@ function App() {
     </div>
   );
 }
-
+*/
+function App() {
+  return (
+    <div>
+      <AuthorList></AuthorList>
+    </div>
+  );
+}
 export default App;
