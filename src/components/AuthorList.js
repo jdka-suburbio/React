@@ -1,6 +1,7 @@
 import React, { useEffect , useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../util/auth";
+import Navbar from "./NavBar";
 
 function AuthorList(){
     var token = getToken();
@@ -21,6 +22,11 @@ function AuthorList(){
             .then((data) => setAuthors(data))
             .catch((err) => console.log("Error: ",err));
     }, []);    
+
+        const handleClick = () => {
+            navigation('create'); 
+        };
+
         const handleDelete = (id) => {
 
             const deleteOptions = { 
@@ -49,15 +55,30 @@ function AuthorList(){
 
     return(
         <div>
+            <Navbar></Navbar>            
             <h2>Autores</h2>
-            <ul>
+            <button className="px-4 py-2 font-medium text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green active:bg-green-600 transition duration-150 ease-in-out" onClick={handleClick}>Add</button>
+            <table className="min-w-full divide-y divide-gray-200">
+                <thead>
+                    <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
                 {authors.map((item) => (
-                    <li key={item.id}>
-                        <button onClick={()=>handleDelete(item.id)}>X</button>
-                        {item.name}
-                    </li>
-                ))}                
-            </ul>
+                    <tr key={item.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">{item.id}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <button className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">Edit</button>
+                            <button className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out" onClick={()=>handleDelete(item.id)}>Delete</button>
+                        </td>                        
+                    </tr>
+                ))} 
+                </tbody>
+            </table>            
         </div>
     )
 }
